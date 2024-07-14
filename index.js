@@ -1,24 +1,18 @@
 let numbersArray = [];
 
 function getNumber() {
-  // Lấy giá trị từ ô nhập liệu
   const inputElement = document.getElementById("inputNum");
   const inputValue = inputElement.value;
 
-  // Tách các số từ chuỗi nhập vào bằng dấu phẩy và chuyển đổi thành số thập phân
+
   const numbers = inputValue
     .split(",")
     .map((num) => parseFloat(num.trim()))
     .filter((num) => !isNaN(num));
 
   if (numbers.length > 0) {
-    // Thêm các số vào mảng
     numbersArray.push(...numbers);
-
-    // Cập nhật nội dung của txtArray để hiển thị các số trong mảng
     document.getElementById("txtArray").textContent = numbersArray.join(", ");
-
-    // Xóa giá trị của ô nhập liệu
     inputElement.value = "";
   } else {
     alert("Vui lòng nhập ít nhất một số thập phân hợp lệ!");
@@ -36,8 +30,9 @@ function sumPositive() {
       "txtSum"
     ).textContent = `Tổng số dương: ${positiveSum}`;
 }
+// Đếm số dương
 function countPositive() {
-  const positiveCount = 0;
+  let positiveCount = 0;
   for(let i = 0; i < numbersArray.length; i++){
     if (numbersArray[i] > 0){
         positiveCount++;
@@ -47,9 +42,10 @@ function countPositive() {
     "txtCount"
   ).textContent = `Số lượng số dương: ${positiveCount}`;
 }
+// Tìm số bé nhất
 function findMin(){
     if (numbersArray.length > 0) {
-      const minNumber = numbersArray[0];
+      let minNumber = numbersArray[0];
       for (let i = 0; i < numbersArray.length; i++){
         if (numbersArray[i] < minNumber) {
             minNumber = numbersArray[i];
@@ -62,6 +58,7 @@ function findMin(){
       document.getElementById("txtMin").textContent = "Số bé nhất: Chưa có số";
     }
 }
+// Tìm số dương bé nhất
 function  findMinPos(){
     if(numbersArray.length > 0){
         let minPos = null;
@@ -90,6 +87,7 @@ function  findMinPos(){
         ).textContent = `Mảng rỗng`;
     }
 }
+// Tìm số chẵn cuối cùng
 function findEven() {
     if(numbersArray.length > 0){
         let lastEven = null;
@@ -107,6 +105,7 @@ function findEven() {
         document.getElementById('txtEven').textContent = `Mảng rỗng`;
     }
 }
+// Đổi vị trí 2 số
 function changePosition() {
     if (numbersArray.length > 0){
         let index1 = parseInt(document.getElementById("inputIndex1").value.trim());
@@ -136,7 +135,7 @@ function changePosition() {
 }
 
 
-// Hàm sắp xếp mảng numbersArray
+// Sắp xếp mảng
 function sortIncrease() {
   if(numbersArray.length > 0){
     for (let i = 0; i < numbersArray.length - 1; i++) {
@@ -155,8 +154,8 @@ function sortIncrease() {
   } 
 }
 
+// Tìm số nguyên tố đầu tiên
 function findPrime() {
-  // Hàm kiểm tra một số có phải là số nguyên tố hay không
   function isPrime(num) {
     if (num <= 1) return false;
     if (num <= 3) return true;
@@ -166,33 +165,26 @@ function findPrime() {
     }
     return true;
   }
-
-  // Tìm số nguyên tố đầu tiên trong mảng numbersArray
   for (const num of numbersArray) {
     if (Number.isInteger(num) && isPrime(num)) {
-      // Cập nhật nội dung của txtPrime để hiển thị số nguyên tố đầu tiên
       document.getElementById(
         "txtPrime"
       ).textContent = `Số nguyên tố đầu tiên: ${num}`;
-      return; // Dừng vòng lặp khi tìm thấy số nguyên tố đầu tiên
+      return;
     }
   }
-
-  // Nếu không có số nguyên tố nào
   document.getElementById("txtPrime").textContent =
     "Không có số nguyên tố nào trong mảng.";
 }
 
 
-
+// Đếm số nguyên
 function findInt() {
-  // Đếm số lượng số nguyên dương và số nguyên âm
   let positiveCountInt = 0;
   let negativeCountInt = 0;
 
   for (const num of numbersArray) {
     if (Number.isInteger(num)) {
-      // Kiểm tra xem num có phải là số nguyên không
       if (num > 0) {
         positiveCountInt++;
       } else if (num < 0) {
@@ -200,13 +192,11 @@ function findInt() {
       }
     }
   }
-
-  // Cập nhật nội dung của txtInt để hiển thị số lượng số nguyên dương và số nguyên âm
   document.getElementById(
     "txtInt"
   ).textContent = `Số nguyên dương: ${positiveCountInt}, Số nguyên âm: ${negativeCountInt}`;
 }
-
+// So sánh số lượng số nguyên và số âm
 function compareNum() {
     let positive = 0;
     let negative = 0;
@@ -221,10 +211,10 @@ function compareNum() {
     let result;
     if (positive > negative) {
       result = `Số lượng số dương nhiều hơn số lương số âm: Số dương: ${positive} > Số âm: ${negative}`;
-    } else if (positiveCount < negativeCount) {
-      result = `Số lượng số âm nhiều hơn số lượng số dương: Số âm: ${negativeCount} > Số dương: ${positiveCount}`;
+    } else if (positive < negative) {
+      result = `Số lượng số âm nhiều hơn số lượng số dương: Số âm: ${negative} > Số dương: ${positive}`;
     } else {
-      result = `Số lượng số dương và số âm bằng nhau: Số dương: ${positiveCount} = Số âm: ${negativeCount}`;
+      result = `Số lượng số dương và số âm bằng nhau: Số dương: ${positive} = Số âm: ${negative}`;
     }
     document.getElementById("txtCompare").textContent = result;
 }
